@@ -129,7 +129,7 @@ table.bang{border-collapse:collapse;width:100%;min-width:560px;font-size:12.5px}
     </div>
     <p class="loi" id="loi"></p>
     <div style="margin-top:18px"><button class="nut nut-chinh" type="submit">🔍 Xem gợi ý trường cho tôi</button></div>
-    <p class="ghi">Công cụ chạy ngay trên điện thoại của bạn, chưa gửi dữ liệu đi đâu. Kết quả mang tính tham khảo, không phải cam kết về visa hay kết quả xét tuyển.</p>
+    <p class="ghi">Hồ sơ bạn nhập chỉ được xử lý trên điện thoại của bạn. Kết quả mang tính tham khảo, không phải cam kết về visa hay kết quả xét tuyển.</p>
   </form>
 
   <section id="kq">
@@ -161,7 +161,7 @@ table.bang{border-collapse:collapse;width:100%;min-width:560px;font-size:12.5px}
           <div><label for="lSdt">Số điện thoại / Zalo</label><input id="lSdt" type="tel" inputmode="tel" autocomplete="tel" maxlength="14" placeholder="09xx xxx xxx"></div>
         </div>
         <div class="bay" aria-hidden="true"><label>Website<input id="lBay" type="text" tabindex="-1" autocomplete="off"></label></div>
-        <div class="dongy"><input id="lDy" type="checkbox"><label for="lDy">Tôi đồng ý để Khải Ân International liên hệ tư vấn qua số điện thoại này và lưu thông tin hồ sơ tôi vừa nhập để tư vấn. Xem <a href="https://dapper-concha-c91d3b.netlify.app/privacy.html" target="_blank" rel="noopener">chính sách quyền riêng tư</a>. Yêu cầu xóa dữ liệu: info@kanvn.com.</label></div>
+        <div class="dongy"><input id="lDy" type="checkbox"><label for="lDy">Tôi đồng ý để Khải Ân International liên hệ tư vấn qua số điện thoại này và lưu thông tin hồ sơ tôi vừa nhập để tư vấn. Xem <a href="https://nguyentu-kan.github.io/truong/privacy.html" target="_blank" rel="noopener">chính sách quyền riêng tư</a>. Yêu cầu xóa dữ liệu: info@kanvn.com.</label></div>
         <p class="loi" id="lLoi"></p>
         <div style="margin-top:14px"><button class="nut nut-chinh" id="lGui" type="submit">Gửi thông tin</button></div>
       </form>
@@ -200,7 +200,8 @@ var kqHienTai = null;
 
 function toast(t){var e=$("toast");e.textContent=t;e.className="hien";clearTimeout(toast.h);toast.h=setTimeout(function(){e.className=""},3200)}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function gui(b){try{fetch(APPS,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(b),keepalive:true}).catch(function(){})}catch(e){}}
+var VID = (function(){ try { var k = localStorage.getItem("kan_vid"); if (!k) { k = ""; var c = "abcdefghijklmnopqrstuvwxyz0123456789"; for (var i = 0; i < 14; i++) k += c.charAt(Math.floor(Math.random() * c.length)); localStorage.setItem("kan_vid", k); } return k; } catch (e) { return ""; } })();
+function gui(b){ if (VID) b.vid = VID; try{fetch(APPS,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(b),keepalive:true}).catch(function(){})}catch(e){}}
 
 // ---- Phan tich ----
 /*KETQUA_BAT_DAU*/
@@ -393,7 +394,7 @@ $("f").addEventListener("submit", function(e){
   var r = phanTich(h);
   kqHienTai = {h: h, r: r};
   hienKetQua(h, r);
-  gui({action: "app_dem", src: SRC, he: r.he, so_truong: r.ds.length, nganh: h.nganh, topik: h.topik});
+  gui({action: "app_dem", src: SRC, su_kien: "phan_tich"});
 });
 
 // ---- Nut sau ket qua ----
