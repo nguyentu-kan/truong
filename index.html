@@ -69,7 +69,8 @@ input:focus,select:focus{outline:none;border-color:var(--do);box-shadow:0 0 0 3p
 #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#222;color:#fff;padding:12px 18px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s;max-width:90%;text-align:center;z-index:9}
 #toast.hien{opacity:1}
 .dongy{display:flex;gap:10px;align-items:flex-start;margin-top:12px}
-.dongy input{width:20px;height:20px;margin-top:2px;flex:none}
+.dongy input[type=checkbox]{-webkit-appearance:checkbox;appearance:auto;accent-color:#7a1022;width:22px;height:22px;margin-top:1px;padding:0;flex:none;cursor:pointer;box-shadow:none}
+.dongy label{cursor:pointer}
 .dongy label{font-weight:400;font-size:13px;margin:0;color:var(--chu)}
 .bay{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden}
 footer{max-width:760px;margin:0 auto;padding:6px 16px 36px;font-size:13px;color:var(--xam);text-align:center}
