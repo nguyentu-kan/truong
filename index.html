@@ -129,7 +129,7 @@ table.bang{border-collapse:collapse;width:100%;min-width:560px;font-size:12.5px}
     </div>
     <p class="loi" id="loi"></p>
     <div style="margin-top:18px"><button class="nut nut-chinh" type="submit">🔍 Xem gợi ý trường cho tôi</button></div>
-    <p class="ghi">Hồ sơ bạn nhập chỉ được xử lý trên điện thoại của bạn. Kết quả mang tính tham khảo, không phải cam kết về visa hay kết quả xét tuyển.</p>
+    <p class="ghi">Hồ sơ bạn nhập được xử lý trên điện thoại của bạn; chỉ một số thống kê ẩn danh (nhóm tuổi, ngành, khu vực...) được ghi nhận, không kèm tên hay số điện thoại. Kết quả mang tính tham khảo, không phải cam kết về visa hay kết quả xét tuyển.</p>
   </form>
 
   <section id="kq">
@@ -201,6 +201,16 @@ var kqHienTai = null;
 function toast(t){var e=$("toast");e.textContent=t;e.className="hien";clearTimeout(toast.h);toast.h=setTimeout(function(){e.className=""},3200)}
 function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 var VID = (function(){ try { var k = localStorage.getItem("kan_vid"); if (!k) { k = ""; var c = "abcdefghijklmnopqrstuvwxyz0123456789"; for (var i = 0; i < 14; i++) k += c.charAt(Math.floor(Math.random() * c.length)); localStorage.setItem("kan_vid", k); } return k; } catch (e) { return ""; } })();
+function nhuCau(h, r){
+  var t = r.tuoi, g = h.gpa;
+  return {
+    tuoi: t < 18 ? "<18" : t <= 19 ? "18-19" : t <= 22 ? "20-22" : t <= 25 ? "23-25" : t <= 30 ? "26-30" : "31+",
+    gpa: g < 6.5 ? "<6.5" : g < 7 ? "6.5-6.9" : g < 8 ? "7-7.9" : "8+",
+    he: HE[r.he].ma, topik: h.topik, hocvan: h.hocvan, nganh: h.nganh || "", vung: h.vung,
+    du: HE_HIEN.filter(function(m){ return r.duDK[m]; }).map(function(m){ return HE[m].ma; }).join(","),
+    truong: (h.truong || "").slice(0, 40)
+  };
+}
 function gui(b){ if (VID) b.vid = VID; try{fetch(APPS,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(b),keepalive:true}).catch(function(){})}catch(e){}}
 
 // ---- Phan tich ----
@@ -394,7 +404,7 @@ $("f").addEventListener("submit", function(e){
   var r = phanTich(h);
   kqHienTai = {h: h, r: r};
   hienKetQua(h, r);
-  gui({action: "app_dem", src: SRC, su_kien: "phan_tich"});
+  gui({action: "app_dem", src: SRC, su_kien: "phan_tich", nc: nhuCau(h, r)});
 });
 
 // ---- Nut sau ket qua ----
