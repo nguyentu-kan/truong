@@ -212,7 +212,8 @@ function nhuCau(h, r){
     truong: (h.truong || "").slice(0, 40), tinh: h.tinh || ""
   };
 }
-function gui(b){ if (VID) b.vid = VID; try{fetch(APPS,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(b),keepalive:true}).catch(function(){})}catch(e){}}
+var CHU = (function(){ try { if (new URLSearchParams(location.search).get("chu") === "1") localStorage.setItem("kan_chu","1"); if (new URLSearchParams(location.search).get("chu") === "0") localStorage.removeItem("kan_chu"); return localStorage.getItem("kan_chu") === "1" || navigator.webdriver === true; } catch (e) { return navigator.webdriver === true; } })(); // may cua chu / trinh duyet tu dong: KHONG dem
+function gui(b){ if (CHU) return; if (VID) b.vid = VID; try{fetch(APPS,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(b),keepalive:true}).catch(function(){})}catch(e){}}
 
 // ---- Phan tich ----
 /*KETQUA_BAT_DAU*/
