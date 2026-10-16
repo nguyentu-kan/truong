@@ -189,7 +189,7 @@ var NGANH_TEN = {khac:"Ngành khác",kinhdoanh:"Kinh doanh",logistic:"Logistics"
 var VUNG_TEN = {all:"Khắp Hàn Quốc",Seoul:"Seoul và lân cận",Busan:"Busan và lân cận",Tinh:"Tỉnh khác"};
 var MUC = {1:"Top 1",2:"Top 2",3:"Top 3"};
 var $ = function(i){return document.getElementById(i)};
-var SRC = (new URLSearchParams(location.search).get("src") || "").toLowerCase().replace(/[^a-z0-9_-]/g,"").slice(0,30).replace(/^(fanpage|nhom-han-d+|bl-d+).*$/,"$1"); // Facebook hay dinh chu ke ben vao link (src=fanpageKhai...): cat ve nguon goc
+var SRC = (new URLSearchParams(location.search).get("src") || "").toLowerCase().replace(/[^a-z0-9_-]/g,"").slice(0,30).replace(/^(fanpage|nhom-han-[0-9]+|bl-[0-9]+).*$/,"$1"); // Facebook hay dinh chu ke ben vao link (src=fanpageKhai...): cat ve nguon goc
 var kqHienTai = null;
 
 // ---- Khoi tao ----
